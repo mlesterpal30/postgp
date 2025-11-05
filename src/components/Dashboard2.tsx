@@ -4,7 +4,7 @@ import { useGetAdmins } from "../hooks/AdminRepository";
 import { useGetUsers } from "../hooks/UserRepository";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+const Dashboard2 = () => {
 	const {
 		isLoading: isAdminLoading,
 		refetch: refetchAdmins,
@@ -88,4 +88,4 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default Dashboard2;
