@@ -24,14 +24,26 @@ class APIClient<T> {
 		this.endpoint = endpoint;
 	}
 
-	getAll = (): Promise<T> => {
-		return axiosInstance.get<T>(this.endpoint).then((res) => res.data);
+	getAll = (): Promise<T[]> => {
+		return axiosInstance.get<T[]>(this.endpoint).then((res) => res.data);
+	};
+
+	get = (id: number | string): Promise<T> => {
+		return axiosInstance.get<T>(`${this.endpoint}/${id}`).then((res) => res.data);
 	};
 
 	create = (data: any) => {
 		// Log before sending
 		console.log("Data being sent:", data);
 		return axiosInstance.post(this.endpoint, data).then((res) => res.data);
+	};
+
+	update = (id: number | string, data: any) => {
+		return axiosInstance.put(`${this.endpoint}/${id}`, data).then((res) => res.data);
+	};
+
+	delete = (id: number | string) => {
+		return axiosInstance.delete(`${this.endpoint}/${id}`).then((res) => res.data);
 	};
 }
 

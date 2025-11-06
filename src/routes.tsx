@@ -3,6 +3,8 @@ import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Dashboard from "./components/Dasbhoard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Products from "./components/Products";
+import NotFound from "./components/NotFound";
 
 const router = createBrowserRouter([
 	{
@@ -20,13 +22,35 @@ const router = createBrowserRouter([
 				<Dashboard />
 			</ProtectedRoute>
 		),
+		children: [
+			{
+				path: "products",
+				element: <Products />,
+			},
+		],
+	},
+	{
+		path: "/products",
+		element: (
+			<ProtectedRoute>
+				<Dashboard />
+			</ProtectedRoute>
+		),
+		children: [
+			{
+				index: true,
+				element: <Products />,
+			},
+		],
 	},
 	{
 		path: "/drawer",
-		element: 
-				<Dashboard />
-	}
-
+		element: <Dashboard />,
+	},
+	{
+		path: "*",
+		element: <NotFound />,
+	},
 ]);
 
 export default router;
