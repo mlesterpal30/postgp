@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Dashboard from "./components/Dasbhoard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
 	{
@@ -14,12 +15,18 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/dashboard",
-		element: <Dashboard />,
+		element: (
+			<ProtectedRoute>
+				<Dashboard />
+			</ProtectedRoute>
+		),
 	},
 	{
 		path: "/drawer",
-		element: <Dashboard />,
-	},
+		element: 
+				<Dashboard />
+	}
+
 ]);
 
 export default router;

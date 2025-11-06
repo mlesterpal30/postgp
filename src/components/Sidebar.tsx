@@ -8,6 +8,7 @@ export type SidebarLink = {
 	label: string;
 	icon?: React.ReactElement;
 	children?: Array<{ to: string; label: string }>;
+	requiredRole?: "admin" | "user"; // Optional: specify which role can see this link
 };
 
 type SidebarProps = {

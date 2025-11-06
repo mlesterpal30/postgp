@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import {
 	FiHome,
@@ -13,6 +13,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import Sidebar, { type SidebarLink } from "./Sidebar";
 import TopNav from "./TopNav";
+import { isAdmin } from "../utils/auth";
 
 const Dashboard = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -31,13 +32,17 @@ const Dashboard = () => {
 	const location = useLocation();
 	const currentPath = location.pathname;
 	console.log("Current Path:", currentPath); // Debugging line
-	const links: SidebarLink[] = [
+	
+	const userIsAdmin = isAdmin();
+	
+	const allLinks: SidebarLink[] = [
 		{ to: "/users", label: "Dashboard", icon: <FiHome /> },
 		{ to: "/inventory", label: "Inventory", icon: <FiPackage /> },
 		{
 			to: "/sales",
 			label: "Sales",
 			icon: <FiActivity />,
+			requiredRole: "admin", // Only admin can see Sales
 			children: [
 				{ to: "/sales/overview", label: "Overview" },
 				{ to: "/sales/invoices", label: "Invoices" },
@@ -49,6 +54,17 @@ const Dashboard = () => {
 		{ to: "/reports", label: "Reports", icon: <FiBarChart2 /> },
 		{ to: "/settings", label: "Settings", icon: <FiSettings /> },
 	];
+
+	// Filter links based on user role
+	const links = useMemo(() => {
+		return allLinks.filter((link) => {
+			if (link.requiredRole === "admin") {
+				return userIsAdmin;
+			}
+			// If no requiredRole specified, show to all authenticated users
+			return true;
+		});
+	}, [userIsAdmin]);
 
 	const [expandedKey, setExpandedKey] = useState<string | null>(null);
 

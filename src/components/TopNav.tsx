@@ -1,26 +1,22 @@
 import React from "react";
-import {
-	HStack,
-	Input,
-	InputGroup,
-	InputLeftElement,
-	Flex,
-	Text,
-	Icon as ChakraIcon,
-	IconButton,
-} from "@chakra-ui/react";
-import {
-	IoSearchOutline,
-	IoMailOutline,
-	IoNotificationsOutline,
-	IoPersonOutline,
-} from "react-icons/io5";
+import { Flex, Text, IconButton, Button, HStack, Icon } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { getUsername } from "../utils/auth";
 
 type TopNavProps = {
 	onToggleSidebar: () => void;
 };
 
 const TopNav: React.FC<TopNavProps> = ({ onToggleSidebar }) => {
+	const navigate = useNavigate();
+	const username = getUsername();
+
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		navigate("/login");
+	};
+
 	return (
 		<Flex
 			as="nav"
@@ -32,47 +28,33 @@ const TopNav: React.FC<TopNavProps> = ({ onToggleSidebar }) => {
 			px={6}
 			py={3}
 			align="center"
-			justify="space-between"
+			justify="space-between" 
+			className="font-geist"
 		>
-			<HStack spacing={3} flex="1" maxW="md">
-				<IconButton
-					aria-label="Toggle sidebar"
-					icon={<Text as="span">☰</Text>}
-					onClick={onToggleSidebar}
-					variant="ghost"
-				/>
-				<InputGroup>
-					<InputLeftElement pointerEvents="none">
-						<IoSearchOutline color="gray" size={20} />
-					</InputLeftElement>
-					<Input
-						placeholder="Search task"
-						bg="white"
-						_dark={{ bg: "gray.700", color: "white" }}
-						borderRadius="full"
-						_focus={{ boxShadow: "outline", borderColor: "blue.400" }}
-						size="md"
-					/>
-				</InputGroup>
-			</HStack>
+			<IconButton
+				aria-label="Toggle sidebar"
+				icon={<Text as="span">☰</Text>}
+				onClick={onToggleSidebar}
+				variant="ghost"
+			/>
 
-			<HStack spacing={5} ml={6}>
-				<IconButton
-					aria-label="Mail"
-					icon={<ChakraIcon as={IoMailOutline} boxSize={5} />}
-					variant="ghost"
-				/>
-				<IconButton
-					aria-label="Notifications"
-					icon={<ChakraIcon as={IoNotificationsOutline} boxSize={5} />}
-					variant="ghost"
-				/>
-				<HStack spacing={2}>
-					<ChakraIcon as={IoPersonOutline} boxSize={6} />
-					<Text fontWeight="medium" fontSize="sm">
-						John Doe
-					</Text>
-				</HStack>
+			<HStack spacing={4}>
+				{username && (
+					<HStack spacing={1}>
+						<Icon as={FaRegCircleUser} boxSize={6} />
+						<Text fontWeight="medium" fontSize="sm">
+							{username}
+						</Text>
+					</HStack>
+				)}
+				<Button
+					colorScheme="red"
+					variant="outline"
+					size="sm"
+					onClick={handleLogout}
+				>
+					Logout
+				</Button>
 			</HStack>
 		</Flex>
 	);
