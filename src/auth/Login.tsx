@@ -7,6 +7,7 @@ import {
 	Text,
 	VStack,
 	Image,
+	useToast,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@chakra-ui/react";
@@ -18,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 	const navigate = useNavigate();
+	const toast = useToast();
 
 	const { register, handleSubmit } = useForm<LoginUser>();
 	const loginUser = useLoginUser();
@@ -26,6 +28,23 @@ const Login = () => {
 		loginUser.mutate(data, {
 			onSuccess: () => {
 				navigate("/dashboard");
+			},
+			onError: (error: any) => {
+				// Extract error message from axios error response
+				const errorMessage =
+					error?.response?.data?.message ||
+					error?.response?.data?.error ||
+					error?.message ||
+					"Invalid username or password";
+
+				toast({
+					title: "Login Failed",
+					description: errorMessage,
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+					position: "top-right",
+				});
 			},
 		});
 	};
@@ -64,6 +83,7 @@ const Login = () => {
 								placeholder="Enter your username"
 								borderColor="black"
 								focusBorderColor="gray.700"
+								disabled={loginUser.isPending}
 							/>
 						</FormControl>
 
@@ -75,6 +95,7 @@ const Login = () => {
 								placeholder="Enter your password"
 								borderColor="black"
 								focusBorderColor="gray.700"
+								disabled={loginUser.isPending}
 							/>
 						</FormControl>
 
@@ -84,6 +105,9 @@ const Login = () => {
 							bg="#ED1B24"
 							color="white"
 							_hover={{ bg: "#C8161C" }}
+							isLoading={loginUser.isPending}
+							loadingText="Login..."
+							disabled={loginUser.isPending}
 						>
 							Login
 						</Button>

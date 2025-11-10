@@ -4,6 +4,7 @@ import Login from "./auth/Login";
 import Dashboard from "./components/Dasbhoard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Products from "./components/Products";
+import Reports from "./components/Reports";
 import NotFound from "./components/NotFound";
 
 const router = createBrowserRouter([
@@ -40,6 +41,20 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: <Products />,
+			},
+		],
+	},
+	{
+		path: "/reports",
+		element: (
+			<ProtectedRoute>
+				<Dashboard />
+			</ProtectedRoute>
+		),
+		children: [
+			{
+				index: true,
+				element: <Reports />,
 			},
 		],
 	},

@@ -118,11 +118,20 @@ const Products = () => {
 
 	return (
 		<Box p={6} className="font-geist">
-			<Box display="flex" justifyContent="space-between" alignItems="center" mb={6}>
+			<Box
+				display="flex"
+				justifyContent="space-between"
+				alignItems="center"
+				mb={6}
+			>
 				<Text fontSize="2xl" fontWeight="bold">
 					Products
 				</Text>
-				<Button leftIcon={<FiPlus />} colorScheme="blue" onClick={handleOpenCreate}>
+				<Button
+					leftIcon={<FiPlus />}
+					colorScheme="blue"
+					onClick={handleOpenCreate}
+				>
 					Add Product
 				</Button>
 			</Box>
@@ -233,7 +242,11 @@ const Products = () => {
 									type="submit"
 									colorScheme="blue"
 									width="full"
-									isLoading={isSubmitting || createProduct.isPending || updateProduct.isPending}
+									isLoading={
+										isSubmitting ||
+										createProduct.isPending ||
+										updateProduct.isPending
+									}
 								>
 									{editingProduct ? "Update" : "Create"}
 								</Button>
@@ -247,4 +260,3 @@ const Products = () => {
 };
 
 export default Products;
-

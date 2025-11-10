@@ -1,8 +1,9 @@
 import React from "react";
-import { Flex, Text, IconButton, Button, HStack, Icon } from "@chakra-ui/react";
+import { Flex, Text, IconButton, Button, HStack, Icon, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { getUsername } from "../utils/auth";
+import tgplogo from "../assets/tgplogo.jpg";
 
 type TopNavProps = {
 	onToggleSidebar: () => void;
@@ -31,12 +32,20 @@ const TopNav: React.FC<TopNavProps> = ({ onToggleSidebar }) => {
 			justify="space-between" 
 			className="font-geist"
 		>
-			<IconButton
-				aria-label="Toggle sidebar"
-				icon={<Text as="span">☰</Text>}
-				onClick={onToggleSidebar}
-				variant="ghost"
-			/>
+			<HStack spacing={3}>
+				<IconButton
+					aria-label="Toggle sidebar"
+					icon={<Text as="span">☰</Text>}
+					onClick={onToggleSidebar}
+					variant="ghost"
+				/>
+				<Image
+					src={tgplogo}
+					alt="TGP Logo"
+					boxSize="40px"
+					objectFit="contain"
+				/>
+			</HStack>
 
 			<HStack spacing={4}>
 				{username && (
