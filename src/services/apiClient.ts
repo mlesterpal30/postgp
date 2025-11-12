@@ -29,7 +29,9 @@ class APIClient<T> {
 	};
 
 	get = (id: number | string): Promise<T> => {
-		return axiosInstance.get<T>(`${this.endpoint}/${id}`).then((res) => res.data);
+		return axiosInstance
+			.get<T>(`${this.endpoint}/${id}`)
+			.then((res) => res.data);
 	};
 
 	create = (data: any) => {
@@ -39,11 +41,15 @@ class APIClient<T> {
 	};
 
 	update = (id: number | string, data: any) => {
-		return axiosInstance.put(`${this.endpoint}/${id}`, data).then((res) => res.data);
+		return axiosInstance
+			.put(`${this.endpoint}/${id}`, data)
+			.then((res) => res.data);
 	};
 
 	delete = (id: number | string) => {
-		return axiosInstance.delete(`${this.endpoint}/${id}`).then((res) => res.data);
+		return axiosInstance
+			.delete(`${this.endpoint}/${id}`)
+			.then((res) => res.data);
 	};
 }
 

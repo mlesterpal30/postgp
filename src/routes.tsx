@@ -10,11 +10,15 @@ import NotFound from "./components/NotFound";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Register />,
+		element: <Login />,
 	},
 	{
 		path: "/login",
 		element: <Login />,
+	},
+	{
+		path: "/register",
+		element: <Register />,
 	},
 	{
 		path: "/dashboard",

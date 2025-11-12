@@ -305,4 +305,3 @@ const Reports: React.FC = () => {
 };
 
 export default Reports;
-
